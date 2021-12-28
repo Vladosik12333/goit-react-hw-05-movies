@@ -1,0 +1,11 @@
+.list {
+}
+
+.item {
+  margin-bottom: 30px;
+}
+
+.item p {
+  margin-top: 15px;
+  font-size: small;
+}

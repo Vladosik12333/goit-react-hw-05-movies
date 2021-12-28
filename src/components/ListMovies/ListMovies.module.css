@@ -1,0 +1,12 @@
+.list {
+  text-align: center;
+}
+
+.item {
+  margin-top: 10px;
+  color: rgb(0, 153, 255);
+}
+
+.item .link {
+  text-decoration: underline;
+}

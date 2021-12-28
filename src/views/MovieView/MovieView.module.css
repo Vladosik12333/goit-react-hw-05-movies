@@ -1,0 +1,21 @@
+.btn {
+  border: 1px solid grey;
+  width: 60px;
+  height: 25px;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.list {
+  padding-bottom: 50px;
+}
+
+.item {
+  margin-top: 10px;
+  color: rgb(0, 153, 255);
+}
+
+.item .link {
+  text-decoration: underline;
+}
