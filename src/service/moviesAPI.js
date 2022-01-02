@@ -2,20 +2,35 @@ const KEY = '3634b3d3506b5f3dc1d4858dbd6d21ce';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 
 async function fetchToBD(url = '', config = {}) {
-  const response = await fetch(url, config);
-  return response.ok
-    ? await response.json()
-    : Promise.reject(new Error(response.status));
+  try {
+    const response = await fetch(url, config);
+
+    if (!response.ok)
+      throw Error('Oooops, anything did not work. Try again :)');
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
 }
 
 export function fetchTrending() {
   return fetchToBD(`${BASE_URL}trending/movie/day?api_key=${KEY}`);
 }
 
-export function fetchMovie(query) {
-  return fetchToBD(
-    `${BASE_URL}search/movie?api_key=${KEY}&language=en-US&query=${query}`,
-  );
+export async function fetchMovie(query) {
+  try {
+    const parsedResponse = await fetchToBD(
+      `${BASE_URL}search/movie?api_key=${KEY}&language=en-US&query=${query}`,
+    );
+
+    if (parsedResponse.results.length === 0)
+      throw Error(`Ooops, we have not "${query}". Try write something other!`);
+
+    return parsedResponse;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export function fetchMovieById(movieId) {

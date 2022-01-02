@@ -1,4 +1,4 @@
-import css from './MovieCastView.module.css';
+import css from './MovieCast.module.css';
 import { fetchActorsById } from 'service/moviesAPI';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -9,7 +9,9 @@ export default function MovieCastView() {
   const { movieId } = useParams();
 
   useEffect(() => {
-    fetchActorsById(movieId).then(response => setCast(response.cast));
+    fetchActorsById(movieId)
+      .then(response => setCast(response.cast))
+      .catch(error => alert(error.message));
   }, []);
 
   return (

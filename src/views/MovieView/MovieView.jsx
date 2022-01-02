@@ -7,17 +7,20 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { fetchMovieById } from 'service/moviesAPI';
 import Movie from 'components/Movie';
-import MovieCastView from 'views/MovieCastView';
-import MovieReviewView from 'views/MovieReviewView';
+
+const MovieCast = lazy(() => import('components/MovieCast'));
+const MovieReview = lazy(() => import('components/MovieReview'));
 
 export default function MovieView() {
   const [movie, setMovie] = useState({});
 
   useEffect(() => {
-    fetchMovieById(movieId).then(response => setMovie(response));
+    fetchMovieById(movieId)
+      .then(response => setMovie(response))
+      .catch(error => alert(error.message));
   }, []);
 
   const { movieId } = useParams();
@@ -67,13 +70,15 @@ export default function MovieView() {
         </ul>
       </div>
 
-      <Route path={`${path}/cast`}>
-        <MovieCastView />
-      </Route>
+      <Suspense fallback={<h1>Загружаем...</h1>}>
+        <Route path={`${path}/cast`}>
+          <MovieCast />
+        </Route>
 
-      <Route path={`${path}/review`}>
-        <MovieReviewView />
-      </Route>
+        <Route path={`${path}/review`}>
+          <MovieReview />
+        </Route>
+      </Suspense>
     </div>
   );
 }
